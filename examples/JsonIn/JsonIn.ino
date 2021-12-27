@@ -1,11 +1,12 @@
 #include <Arduino.h>
 #include <Json.hpp>
 
-#define JSON_SIZE 5
+#define JSON_ITEMS_COUNT 5
+#define JSON_DOC_SIZE 128
 
 String jsonStr = "{\"integer\":332,\"state\":false,\"real\":33.20,\"timer\":3722,\"text\":\"bye bye world!!!\"}";
 
-Json json = Json(JSON_SIZE);
+Json json = Json(JSON_ITEMS_COUNT, JSON_DOC_SIZE);
 int integer = 0;
 bool state = false;
 float real = 0.0;
