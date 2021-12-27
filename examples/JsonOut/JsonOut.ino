@@ -9,7 +9,7 @@ int integer = 0;
 bool state = false;
 float real = 0;
 unsigned long timer = 0;
-char text[] = "hello world!!!";
+String text = "hello world!!!";
 
 void setup() {
   // put your setup code here, to run once:
@@ -28,6 +28,7 @@ void loop() {
   state = !state;
   real += 0.1;
   timer = millis();
+  text = state ? "hello world!!!" : "bye bye world!!!";
   Serial.println(json.toString());
-  delay(10);
+  delay(500);
 }

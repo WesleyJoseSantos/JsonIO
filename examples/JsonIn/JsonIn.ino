@@ -11,7 +11,7 @@ int integer = 0;
 bool state = false;
 float real = 0.0;
 unsigned long timer = 0;
-char text[20] = "";
+String text = "";
 
 void setup() {
   // put your setup code here, to run once:
