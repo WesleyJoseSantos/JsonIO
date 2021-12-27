@@ -18,34 +18,39 @@
 class Json
 {
 private:
-    JsonItem *items;
-    uint8_t size;
+    JsonItem *_items;
+    uint8_t _itCount;
+    size_t _size;
 
     void assignType(char obj[]) {
-        items[size].setType(ObjectType::t_string);
+        _items[_itCount].setType(ObjectType::t_string);
     }
 
     void assignType(int &obj) {
-        items[size].setType(ObjectType::t_int);
+        _items[_itCount].setType(ObjectType::t_int);
     }
 
     void assignType(unsigned long &obj) {
-        items[size].setType(ObjectType::t_ulong);
+        _items[_itCount].setType(ObjectType::t_ulong);
+    }
+
+    void assignType(long &obj) {
+        _items[_itCount].setType(ObjectType::t_long);
     }
 
     void assignType(float &obj) {
-        items[size].setType(ObjectType::t_float);
+        _items[_itCount].setType(ObjectType::t_float);
     }
 
     void assignType(double &obj) {
-        items[size].setType(ObjectType::t_double);
+        _items[_itCount].setType(ObjectType::t_double);
     }
 
     void assignType(bool &obj) {
-        items[size].setType(ObjectType::t_bool);
+        _items[_itCount].setType(ObjectType::t_bool);
     }
 
-    String getKeyValue(String key, String jsonStr){
+    String getKeyValue(String &key, String &jsonStr){
         jsonStr.replace(": ",":");
         key = "\"" + key + "\":";
         int idx1 = jsonStr.indexOf(key);
@@ -58,51 +63,52 @@ private:
     }
 
 public:
-    Json(int size) {
-        items = new JsonItem[size];
+    Json(uint8_t count, size_t size) {
+        _items = new JsonItem[count];
+        _size = size;
     }
 
     ~Json() {
-        delete [] items;
+        delete [] _items;
     }
 
     JsonItem getItem(uint8_t id){
-        return items[id];
+        return _items[id];
     }
 
-    JsonItem getItem(String name){
-        for (int i = 0; i < size; i++)
+    JsonItem getItem(String &name){
+        for (int i = 0; i < _itCount; i++)
         {
-            if(items[i].getName() == name)
-                return items[i];
+            if(_items[i].getName() == name)
+                return _items[i];
         }
     }
 
     String toString(){
-        char jsonStr[512];
+        char jsonStr[_size];
         int idx = sprintf(jsonStr,"{");
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < _itCount; i++)
         {
-            idx += sprintf(&jsonStr[idx], "%s", items[i].toString().c_str());
-            if(i < size - 1) idx += sprintf(&jsonStr[idx], ",");
+            idx += sprintf(&jsonStr[idx], "%s", _items[i].toString().c_str());
+            if(i < _itCount - 1) idx += sprintf(&jsonStr[idx], ",");
         }
         idx += sprintf(&jsonStr[idx], "}");
         return String(jsonStr);
     }
 
-    void fromString(String jsonStr){
-        for (size_t i = 0; i < size; i++)
+    void fromString(String &jsonStr){
+        for (size_t i = 0; i < _itCount; i++)
         {
-            String name = items[i].getName();
+            String name = _items[i].getName();
             String val = getKeyValue(name, jsonStr);
-            items[i].fromString(val);
+            _items[i].fromString(val);
         }
     }
 
     template <typename T>
     void addItem(String name, T &obj) {
-        items[size] = JsonItem(name, &obj, sizeof(obj));
+        _items[_itCount] = JsonItem(name, &obj, sizeof(obj));
         assignType(obj);
-        size++;
+        _itCount++;
     }
 };
