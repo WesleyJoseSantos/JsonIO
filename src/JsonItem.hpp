@@ -106,49 +106,49 @@ public:
         return String(jsonElement);
     }
 
-    void fromString(String value){
+    void fromString(String &str){
         switch (_type)
         {
         case ObjectType::t_string:
             {
                 char *val = (char*)_ptr;
-                value.toCharArray(val, _size);
+                str.toCharArray(val, _size);
             }
             break;
         case ObjectType::t_int:
             {
                 int *val = (int*)_ptr;
-                *val = value.toInt();
+                *val = str.toInt();
             }
             break;
         case ObjectType::t_ulong:
             {
                 unsigned long *val = (unsigned long*)_ptr;
-                *val = value.toInt();
+                *val = str.toInt();
             }
             break;
         case ObjectType::t_long:
             {
                 long *val = (long*)_ptr;
-                *val = value.toInt();
+                *val = str.toInt();
             }
             break;
         case ObjectType::t_float:
             {
                 float *val = (float*)_ptr;
-                *val = value.toFloat();
+                *val = str.toFloat();
             }
             break;
         case ObjectType::t_double:
             {
                 double *val = (double*)_ptr;
-                *val = value.toDouble();
+                *val = str.toDouble();
             }    
             break;
         case ObjectType::t_bool:
             {
                 bool *val = (bool*)_ptr;
-                *val = value == "true";
+                *val = str == "true";
             }
             break;
         default:
