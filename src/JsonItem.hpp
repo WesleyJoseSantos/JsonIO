@@ -39,17 +39,8 @@ private:
         {
         case ObjectType::t_string:
             {
-                String val = "\"";
-                int i = 0;
-                char c = ((char*)_ptr)[i];
-                while(c != '\0')
-                {
-                    val += c;
-                    i++;
-                    c = ((char*)_ptr)[i];
-                }
-                val += "\"";
-                return val;
+                String *val = (String*)_ptr;
+                return *val;
             }
         case ObjectType::t_int:
             {
@@ -169,5 +160,9 @@ public:
     void setType(ObjectType type)
     {
         this->_type = type;
+    }
+
+    void setSize(uint8_t size){
+        _size = size;
     }
 };

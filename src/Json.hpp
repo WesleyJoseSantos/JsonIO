@@ -22,7 +22,7 @@ private:
     uint8_t _itCount;
     size_t _size;
 
-    void assignType(char obj[]) {
+    void assignType(String &obj) {
         _items[_itCount].setType(ObjectType::t_string);
     }
 
