@@ -102,8 +102,8 @@ public:
         {
         case ObjectType::t_string:
             {
-                char *val = (char*)_ptr;
-                str.toCharArray(val, _size);
+                String *val = (String*)_ptr;
+                *val = str;
             }
             break;
         case ObjectType::t_int:
